@@ -26,18 +26,20 @@ TEST_CASE("tick")
     Duration clock = Duration(); //starts at 0
     clock.tick(); //adds 1, 0 -> 1
     REQUIRE(clock.getDuration() == 1);
-    clock.tick(0); //should stay at 12 since we are adding 0
-    REQUIRE(clock.getDuration() == 12);
+    clock.tick(0); //should stay at 1 since we are adding 0
+    REQUIRE(clock.getDuration() == 1);
+    clock.tick(10); //should be 11 when adding 10
+    REQUIRE(clock.getDuration() == 11);
 }
 
 TEST_CASE("alarm")
 {
     Duration clock = Duration(); //starts at 0
     REQUIRE(clock.HasAlarmBeenSet() == false); //should by default be false
-    clock.setAlarm(2);
-    REQUIRE(clock.HasAlarmBeenSet() == true); //should equal 1
-    clock.tick(); 
-    REQUIRE(clock.getDuration() == 1); // test if time = 1
+    clock.setAlarm(10);
+    REQUIRE(clock.HasAlarmBeenSet() == true);
+    clock.tick(10); 
+    REQUIRE(clock.getDuration() == 10); // test if time = 10
     REQUIRE(clock.HasAlarmBeenSet() == false); //when the alarm goes off as true, it should reset to false afterwards 
     
     // test: if user tries to set alarm value to a value in the past
